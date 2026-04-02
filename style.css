@@ -27,6 +27,8 @@
 body{
     background-color: var(--background-color);
     transition: 0.5s;
+    max-width: 100%;
+    overflow-y: hidden;
 }
 
 p {
