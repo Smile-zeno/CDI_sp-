@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="formu.css">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/formu.css">
     <title>Filmographe - Iron man</title>
 </head>
 <body>
@@ -40,18 +40,13 @@
     </header>
     <main>
         <article class="presentation-page">
-            <div style="width: 50%;height: auto;">
-                <img class="image" src="image/Iron_man.webp" alt="Iron man" style="width: 85%;height: auto;">
-            </div>
+            <div name="ImageIronMan" style="width: 50%;height: auto;"></div>
             <div class="texte_presentation" style="width: 50%;height: auto;">
-                <h1>Iron man</h1>
+                <div id="TitreIronMan"></div>
                 <div class="check">
                     <input type="checkbox"><label>J'ai vu ce film</label><br>
                 </div>
-                <div>
-                    <h3 class="Pitch-Fiche">Pitch</h3>
-                    <p class="texte_fiche">Tony Stark, inventeur de génie, vendeur d'armes et playboy milliardaire, est kidnappé en Aghanistan. Forcé par ses ravisseurs de fabriquer une arme redoutable, il construit en secret une armure high-tech révolutionnaire qu'il utilise pour s'échapper. Comprenant la puissance de cette armure, il décide de l'améliorer et de l'utiliser pour faire régner la justice et protéger les innocents.</p>
-                </div>
+                <div id="TexteIronMan"></div>
                 <div>
                     <h3 class="Pitch-Fiche">Fiche technique</h3>
                     <p class="texte_fiche">Réalisateur:<br>Jon Favreau<br>Acteur:<br>Robert Downey Jr., Terrance Howard, Gwyneth Paltrow, Jeff Bridges, Shaun Toub, Leslie Bibb, Clark Gregg, Bill Smitrovich<br>Compositeur:<br>Ramin Djawadi</p>
@@ -72,6 +67,26 @@
             </div>
         </article>
     </footer>
-    <script src="main.js"></script>
+    <script src="Javascript/main.js"></script>
+    <script type="text/javascript"><!-- Information pour Iron Man -->
+        function fetchIronMan() {
+            return fetch(
+                'https://api.themoviedb.org/3/movie/1726-iron-man?api_key=b408120da29830089d811abdd668f258&language=fr-FR'
+            ).then((response) => response.json())
+        }
+        async function displayIronMan() {
+            const data = await fetchIronMan()
+            var list = document.getElementsByName("ImageIronMan") // getElementsByName renvoie une liste ce qui permet d'aaficher l'image à plusieurs endroits en même temps
+            list.forEach(Image => {
+                Image.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" alt="${data.title}" class="image" style="width: 85%; height: auto;"/>
+            `
+            });
+            document.getElementById("TitreIronMan").innerHTML = `<h1>${data.title}</h1>`
+            document.getElementById("TexteIronMan").innerHTML = `<h3 class="Pitch-Fiche">Pitch</h3>
+            <p>${data.overview}</p>`
+        }
+    displayIronMan();
+    </script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="formu.css">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/formu.css">
     <title>Filmographe - The phoenician scheme</title>
 </head>
 <body>
@@ -40,18 +40,13 @@
     </header>
     <main>
         <article class="presentation-page">
-            <div style="width: 50%;height: auto;">
-                <img class="image" src="image/The_phoenician_scheme.webp" alt="The phoenician scheme" style="width: 85%;height: auto;">
-            </div>
+            <div name="ImageThePhoenicianScheme" style="width: 50%;height: auto;"></div>
             <div class="texte_presentation" style="width: 50%;height: auto;">
-                <h1>The phoenician scheme</h1>
+                <div id="TitreThePhoenicianScheme" ></div>
                 <div class="check">
                     <input type="checkbox"><label>J'ai vu ce film</label><br>
                 </div>
-                <div>
-                    <h3 class="Pitch-Fiche">Pitch</h3>
-                    <p class="texte_fiche">???</p>
-                </div>
+                <div id="TexteThePhoenicianScheme"></div>
                 <div>
                     <h3 class="Pitch-Fiche">Fiche technique</h3>
                     <p class="texte_fiche">Réalisateur:<br>Wes Anderson<br>Acteur:<br>Benicio Del Toro, Mia Threapleton, Michael Cera, Scarlett Johansson, Benedict Cumberbatch, Bill Murray<br>Compositeur:<br>Alexandre Desplat</p>
@@ -72,6 +67,26 @@
             </div>
         </article>
     </footer>
-    <script src="main.js"></script>
+    <script src="Javascript/main.js"></script>
+    <script type="text/javascript"><!-- Information pour The phoenician scheme -->
+        function fetchThePhoenicianScheme() {
+            return fetch(
+                'https://api.themoviedb.org/3/movie/1137350?api_key=b408120da29830089d811abdd668f258&language=fr-FR'
+            ).then((response) => response.json())
+        }
+        async function displayThePhoenicianScheme() {
+            const data = await fetchThePhoenicianScheme();
+            var list = document.getElementsByName("ImageThePhoenicianScheme")
+            list.forEach(Image => {
+                Image.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" alt="${data.title}" class="image" style="width: 85%; height: auto;"/>
+            `
+            });
+            document.getElementById("TitreThePhoenicianScheme").innerHTML = `<h1>${data.title}</h1>`
+            document.getElementById("TexteThePhoenicianScheme").innerHTML = `<h3 class="Pitch-Fiche">Pitch</h3>
+            <p>${data.overview}</p>`
+        }
+    displayThePhoenicianScheme();
+    </script>
 </body>
 </html>

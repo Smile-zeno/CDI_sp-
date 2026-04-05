@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="formu.css">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/formu.css">
     <title>Filmographe - Arrete moi si tu peux</title>
 </head>
 <body>
@@ -40,18 +40,14 @@
     </header>
     <main>
         <article class="presentation-page">
-            <div style="width: 50%;height: auto;">
-                <img class="image" src="image/Arrete_moi_si_tu_peux.webp" alt="Arrete moi si tu peux" style="width: 85%;height: auto;">
-            </div>
+            <div name="ImageArreteMoiSiTuPeux" style="width: 50%;height: auto;"></div>
             <div class="texte_presentation" style="width: 50%;height: auto;">
+                <div id="TitreArreteMoiSiTuPeux"></div>
                 <h1>Arrete moi si tu peux</h1>
                 <div class="check">
                     <input type="checkbox"><label>J'ai vu ce film</label><br>
                 </div>
-                <div>
-                    <h3 class="Pitch-Fiche">Pitch</h3>
-                    <p class="texte_fiche">Dans les années soixante, le jeune Frank Abagnale Jr. est passé maître dans l'art de l'escroquerie, allant jusqu'à détourner 2,5 millions de dollars et à figurer sur les listes du FBI comme l'un des dix individus les plus recherchés des Etats-Unis. Véritable caméléon, Frank revêt des identités aussi diverses que celles de pilote de ligne, de médecin, de professeur d'université ou encore d'assistant du procureur. Carl Hanratty, agent du FBI à l'apparence stricte, fait de la traque de Frank Abagnale Jr. sa mission prioritaire, mais ce dernier reste pendant longtemps insaisissable...</p>
-                </div>
+                <div id="TexteArreteMoiSiTuPeux"></div>
                 <div>
                     <h3 class="Pitch-Fiche">Fiche technique</h3>
                     <p class="texte_fiche">Réalisateur:<br>Steven Spielberg<br>Acteur:<br>Leonardo DiCaprio, Tom Hanks, Christopher Walken, Martin Sheen, Nathalie Baye, Amy Adams, Jennifer Garner, James Brolin<br>Compositeur:<br>John Williams</p>
@@ -72,6 +68,26 @@
             </div>
         </article>
     </footer>
-    <script src="main.js"></script>
+    <script src="Javascript/Javascript/main.js"></script>
+    <script type="text/javascript"><!-- Information pour Arrete moi si tu peux -->
+        function fetchArreteMoiSiTuPeux() {
+            return fetch(
+                'https://api.themoviedb.org/3/movie/640?api_key=b408120da29830089d811abdd668f258&language=fr-FR'
+            ).then((response) => response.json())
+        }
+        async function displayArreteMoiSiTuPeux() {
+            const data = await fetchArreteMoiSiTuPeux();
+            var list = document.getElementsByName("ImageArreteMoiSiTuPeux") // getElementsByName renvoie une liste ce qui permet d'aaficher l'image à plusieurs endroits en même temps
+            list.forEach(Image => {
+                Image.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" alt="${data.title}" class="image" style="width: 85%; height: auto;"/>
+            `
+            });
+            document.getElementById("TitreArreteMoiSiTuPeux").innerHTML = `<h1>${data.title}</h1>`
+            document.getElementById("TexteArreteMoiSiTuPeux").innerHTML = `<h3 class="Pitch-Fiche">Pitch</h3>
+            <p>${data.overview}</p>`
+        }
+    displayArreteMoiSiTuPeux();
+    </script>
 </body>
 </html>
